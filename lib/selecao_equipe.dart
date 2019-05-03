@@ -1,17 +1,12 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 import 'package:iegm_validacao_app/iegm_classes.dart';
 import 'package:iegm_validacao_app/home_page.dart';
 
 class SelecaoEquipe extends StatelessWidget{
   static final String tag = 'selecao_equipe_page';
-
   final Future<List<Rota>> rotas = fetchRotas();
-
   @override
   Widget build(BuildContext context) {
     

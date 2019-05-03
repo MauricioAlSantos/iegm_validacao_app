@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'dart:async';
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:iegm_validacao_app/iegm_classes.dart';
 
 final String mainIconName='assets/recalculo_ano.svg';
@@ -16,22 +14,6 @@ class HomePage extends StatefulWidget{
 
   @override
   _HomePageState createState()=> new _HomePageState(rota);
-}
-
-Future<Post> post = fetchPost();
-
-Future<Post> fetchPost() async {
-  final response =
-  await http.get('http://services.groupkt.com/state/get/IND/UP');
-
-  if (response.statusCode == 200) {
-    // If server returns an OK response, parse the JSON
-    return Post.fromJson(json.decode(response.body));
-  } else {
-
-    // If that response was not OK, throw an error.
-    throw Exception('Failed to load post');
-  }
 }
 
 List<Remessa> remessas = loadRemessas();
@@ -74,7 +56,7 @@ class _HomePageState extends State<HomePage>{
       },
     );
  
-
+    var media =  MediaQuery.of(context).size;
   return new Scaffold (
   appBar: PreferredSize(preferredSize: Size(double.infinity,64),child:AppBar(elevation: 0,
   backgroundColor: Color.fromRGBO(251, 251, 251, 1),
@@ -87,34 +69,38 @@ class _HomePageState extends State<HomePage>{
     Text("Tribunal de Contas do Estado do Maranhão",style: TextStyle(fontSize: 12)),
     ])))),
   drawer: buildDrawer(),
-  body: Column(mainAxisSize: MainAxisSize.max,
-        children:[
-          Column(
-            children:<Widget>[ 
+  body: SafeArea(child:
+          Column(mainAxisSize: MainAxisSize.max,
+            children:[
               Padding(child:
-              Builder(
+                Builder(
                   // Create an inner BuildContext so that the onPressed methods
                   // can refer to the Scaffold with Scaffold.of().
-                   builder: (BuildContext context){ return listaEntes;}),padding: EdgeInsets.only(top: 20,bottom:10)
-                   ),
-                Stack(children: [Container(color: Color.fromRGBO(251, 251,251, 1),child:(buildQuesito()),margin: EdgeInsets.only(top: 16),
+                   builder: (BuildContext context){ return listaEntes;}
+                ),
+                padding: EdgeInsets.only(top: 20,bottom: 10)
+              ),
+              Stack(children: [Container(color: Color.fromRGBO(251, 251,251, 1),child:
+                (buildQuesito()),margin: EdgeInsets.only(top: 16),
                 padding: EdgeInsets.only(top:10),),
                 buildIndice(),
-                ]),
+              ]),
             
               Row(mainAxisSize: MainAxisSize.max,mainAxisAlignment: MainAxisAlignment.spaceBetween,
-               crossAxisAlignment: CrossAxisAlignment.center,children:[
-                FlatButton(padding: EdgeInsets.symmetric(vertical: 30,horizontal: 20),child: CustomPaint(size: Size(50, 50),painter: new ArrowPainter(55.0,50.0,Theme.of(context).accentColor)),
-                  onPressed: (){},),
-                FlatButton(child: Transform.rotate( angle: .8, child:
-                  Container(height: 45,width: 45,color: Theme.of(context).accentColor)),onPressed: (){},),
-                FlatButton(padding: EdgeInsets.symmetric(vertical: 30,horizontal: 20),child: Transform.scale(scale:-1.0,child:
+               crossAxisAlignment: CrossAxisAlignment.center,
+               children:[
+                  FlatButton(child: 
+                    CustomPaint(size: Size(media.height/15, media.height/15),painter: new ArrowPainter(media.height/15,media.height/15,Theme.of(context).accentColor)),
+                    onPressed: (){},),
+                /* Flexible(child:FlatButton(child: Transform.rotate( angle: .8, child:
+                  Container(height: 45,width: 45,color: Theme.of(context).accentColor)),onPressed: (){},)),*/
+               /*  Flexible(child:FlatButton(padding: EdgeInsets.symmetric(vertical: 30,horizontal: 20),child: Transform.scale(scale:-1.0,child:
                   CustomPaint(size: Size(50, 50),painter: new ArrowPainter(55.0,50.0,Theme.of(context).accentColor))),
-                onPressed: (){},)
-            ])
+                onPressed: (){},))  */
+               ])
         ])
-      ])
-  );
+      )
+    );
   }
 
   Widget buildDrawer(){
