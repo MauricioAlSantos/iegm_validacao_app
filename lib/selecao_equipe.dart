@@ -10,7 +10,7 @@ import 'package:iegm_validacao_app/home_page.dart';
 class SelecaoEquipe extends StatelessWidget{
   static final String tag = 'selecao_equipe_page';
 
-  Future<List<Rota>> rotas = fetchRotas();
+  final Future<List<Rota>> rotas = fetchRotas();
 
   @override
   Widget build(BuildContext context) {
