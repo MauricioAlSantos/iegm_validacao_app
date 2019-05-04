@@ -86,18 +86,20 @@ class _HomePageState extends State<HomePage>{
                 buildIndice(),
               ]),
             
-              Row(mainAxisSize: MainAxisSize.max,mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Expanded( child:Container(child:
+                Row(mainAxisSize: MainAxisSize.max,mainAxisAlignment: MainAxisAlignment.spaceBetween,
                crossAxisAlignment: CrossAxisAlignment.center,
                children:[
                   FlatButton(child: 
                     CustomPaint(size: Size(media.height/15, media.height/15),painter: new ArrowPainter(media.height/15,media.height/15,Theme.of(context).accentColor)),
                     onPressed: (){},),
-                /* Flexible(child:FlatButton(child: Transform.rotate( angle: .8, child:
-                  Container(height: 45,width: 45,color: Theme.of(context).accentColor)),onPressed: (){},)),*/
-               /*  Flexible(child:FlatButton(padding: EdgeInsets.symmetric(vertical: 30,horizontal: 20),child: Transform.scale(scale:-1.0,child:
-                  CustomPaint(size: Size(50, 50),painter: new ArrowPainter(55.0,50.0,Theme.of(context).accentColor))),
-                onPressed: (){},))  */
-               ])
+                FlatButton(child: Transform.rotate( angle: .8, child:
+                  Container(height: media.height/15,width: media.height/15,color: Theme.of(context).accentColor)),onPressed: (){},),
+               FlatButton(child: Transform.scale(scale:-1.0,child:
+                  CustomPaint(size: Size(media.height/15, media.height/15),painter: new ArrowPainter(media.height/15,media.height/15,Theme.of(context).accentColor))),
+                onPressed: (){},) 
+              ]))
+            )
         ])
       )
     );
